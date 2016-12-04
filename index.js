@@ -4,6 +4,7 @@ const npm = require('npm-dependency-injection').default;
 const isHyper = require('is-hyper');
 const joinPath = require('path').join;
 const homedir = require('os').homedir();
+const shellEnv = require('shell-env');
 
 const pluginsPath = joinPath(
   homedir,
@@ -27,6 +28,7 @@ const hooks = {
           {
             output: true,
             cwd: pluginsPath,
+            env: shellEnv.sync(),
           }
         );
       }
