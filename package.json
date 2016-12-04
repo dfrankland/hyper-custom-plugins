@@ -1,6 +1,6 @@
 {
   "name": "hyper-custom-plugins",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create Hyper.app plugins from Hyper.app's configuration file `~/.hyper.js`.",
   "repository": {
     "type": "git",
