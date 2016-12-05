@@ -13,15 +13,9 @@ plugin can do.
 
 Just add the following properties to your `~/.hyper.js`.
 
-### `config.customPluginsDependencies`
-
-An optional array of `npm` module dependencies that will be used in your
-plugins. These `npm` modules will be dynamically installed and passed to
-`config.customPlugins` afterwards.
-
 ### `config.customPlugins`
 
-The object containing the properties below.
+The object containing the properties below:
 
 #### `config.customPlugins.output`
 
@@ -31,7 +25,7 @@ A boolean value; whether to print to `STDOUT` the `npm` commands' output.
 
 An optional array of `npm` module dependencies that will be used in your
 plugins. These `npm` modules will be dynamically installed and passed to
-`config.customPlugins` afterwards.
+`config.customPlugins.callback` afterwards.
 
 #### `config.customPlugins.callback`
 
@@ -50,8 +44,8 @@ following properties, as an argument:
     inside `~/.hyper.js`. Mutate this object to change `config`.
 
 *   `dependencies`: An object with keys that will be the name of the `npm`
-    modules passed in `config.customPluginsDependencies` and values that will be
-    the `npm` modules after being `require`d.
+    modules passed in `config.customPlugins.dependencies` and values that will
+    be the `npm` modules after being `require`d.
 
 *   `module`: A reference to `hyper-custom-plugins`' `module` object.
 
