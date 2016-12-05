@@ -21,13 +21,29 @@ plugins. These `npm` modules will be dynamically installed and passed to
 
 ### `config.customPlugins`
 
-A function that takes an object, containing the following properties, as an
-argument:
+The object containing the properties below.
+
+#### `config.customPlugins.output`
+
+A boolean value; whether to print to `STDOUT` the `npm` commands' output.
+
+#### `config.customPlugins.dependencies`
+
+An optional array of `npm` module dependencies that will be used in your
+plugins. These `npm` modules will be dynamically installed and passed to
+`config.customPlugins` afterwards.
+
+#### `config.customPlugins.callback`
+
+A function to be stringified and run in a Node.js `vm`. It will have access to
+the `global` variable from `hyper-custom-plugins` and the object, containing the
+following properties, as an argument:
 
 *   `hooks`: An object that references `hyper-custom-plugins`' `module.exports`.
     Mutate this object to add other Hyper.app hooks. Overriding the
-    `decorateConfig` property will prevent this `config.customPlugins` function
-    from running until a new session is created or "Update Plugins" is run.
+    `decorateConfig` property will prevent the `config.customPlugins.callback`
+    function from running until a new session is created or "Update Plugins" is
+    run.
 
 *   `config`: The initial `config` object after it has been decorated by other
     plugins, unless `hyper-custom-plugins` is the first in the `plugins` array
@@ -37,9 +53,7 @@ argument:
     modules passed in `config.customPluginsDependencies` and values that will be
     the `npm` modules after being `require`d.
 
-*   `console`: A reference to `hyper-custom-plugins`'' `console` object. This
-    `config.customPlugins` function is cast to string and is run in a Node.js
-    `vm` which prevents console logging normally.
+*   `module`: A reference to `hyper-custom-plugins`' `module` object.
 
 ## Example
 
@@ -50,12 +64,15 @@ whole module just for this purpose, I just use `hyper-custom-plugins` like this:
 ```js
 module.exports = {
   config: {
-    customPluginsDependencies: ['color'],
-    customPlugins: ({ hooks, config, dependencies, console }) => {
-      const { color: Color } = dependencies;
-      const { backgroundColor } = config;
-      const newBackground = Color(backgroundColor).clearer(0.5).rgbaString();
-      config.backgroundColor = newBackground;
+    customPlugins: {
+      output: false,
+      dependencies: ['color'],
+      callback: ({ hooks, config, dependencies, module }) => {
+        const { color: Color } = dependencies;
+        const { backgroundColor } = config;
+        const newBackground = Color(backgroundColor).fade(0.3).rgb().string();
+        config.backgroundColor = newBackground;
+      },
     },
   },
   plugins: [
