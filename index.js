@@ -36,7 +36,7 @@ const hooks = {
       }
 
       const id = uuidV4();
-      global[id] = { hooks, config, dependencies, console };
+      global[id] = { hooks, config, dependencies, module };
 
       const script = new vm.Script(
         `(${customPlugins.callback.toString()})(global['${id}'])`
