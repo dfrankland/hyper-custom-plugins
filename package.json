@@ -4,7 +4,7 @@
   "description": "Create Hyper.app plugins from Hyper.app's configuration file `~/.hyper.js`.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dfrankalnd/hyper-custom-plugins.git"
+    "url": "git+https://github.com/dfrankland/hyper-custom-plugins.git"
   },
   "keywords": [
     "hyper",
@@ -20,9 +20,9 @@
   "author": "Dylan Frankland <dylan@frankland.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dfrankalnd/hyper-custom-plugins/issues"
+    "url": "https://github.com/dfrankland/hyper-custom-plugins/issues"
   },
-  "homepage": "https://github.com/dfrankalnd/hyper-custom-plugins#readme",
+  "homepage": "https://github.com/dfrankland/hyper-custom-plugins#readme",
   "files": [
     "index.js"
   ],
