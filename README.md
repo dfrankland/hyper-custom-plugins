@@ -49,29 +49,57 @@ following properties, as an argument:
 
 *   `module`: A reference to `hyper-custom-plugins`' `module` object.
 
-## Example
+## Examples
 
-I like to use the theme `hyperterm-material`, but I wish that the
-`config.backgroundColor` it sets was slightly transparent! Instead of creating a
-whole module just for this purpose, I just use `hyper-custom-plugins` like this:
+1.  Setting the terminal bell sound to be an MP3 file that I sync with
+    [`hyper-sync-settings`][1] would be awesome! So let's do that:
 
-```js
-module.exports = {
-  config: {
-    customPlugins: {
-      output: false,
-      dependencies: ['color'],
-      callback: ({ hooks, config, dependencies, module }) => {
-        const { color: Color } = dependencies;
-        const { backgroundColor } = config;
-        const newBackground = Color(backgroundColor).fade(0.3).rgb().string();
-        config.backgroundColor = newBackground;
+    ```js
+    module.exports = {
+      config: {
+        bell: 'SOUND',
+        bellSoundURL: undefined,
+        customPlugins: {
+          callback: ({ config, module }) => {
+            const homedir = module.require('os').homedir();
+            const joinPath = module.require('path').join;
+            config.bellSoundURL = joinPath(
+              homedir,
+              '.hyper_plugins',
+              '.hyper-sync-settings',
+              'pokemon-rby-level-up.mp3'
+            );
+          },
+        },
       },
-    },
-  },
-  plugins: [
-    'hyperterm-material',
-    'hyper-custom-plugins'
-  ],
-};
-```
+    };
+    ```
+
+2.  I like to use the theme [`hyperterm-material`][2], but I wish that the
+    `config.backgroundColor` it sets was slightly transparent! Instead of
+    creating a whole module just for this purpose, I just use
+    `hyper-custom-plugins` like this:
+
+    ```js
+    module.exports = {
+      config: {
+        customPlugins: {
+          output: false,
+          dependencies: ['color'],
+          callback: ({ hooks, config, dependencies, module }) => {
+            const { color: Color } = dependencies;
+            const { backgroundColor } = config;
+            const newBackground = Color(backgroundColor).fade(0.3).rgb().string();
+            config.backgroundColor = newBackground;
+          },
+        },
+      },
+      plugins: [
+        'hyperterm-material',
+        'hyper-custom-plugins'
+      ],
+    };
+    ```
+
+[1]: https://github.com/dfrankland/hyper-sync-settings
+[2]: https://github.com/dperrera/hyperterm-material
