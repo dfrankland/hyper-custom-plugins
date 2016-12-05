@@ -16,15 +16,17 @@ const hooks = {
     if (
       config &&
       config.customPlugins &&
-      typeof config.customPlugins.toString === 'function'
+      typeof config.customPlugins.callback === 'function' &&
+      typeof config.customPlugins.callback.toString === 'function'
     ) {
+      const { customPlugins } = config;
       let dependencies = {};
       if (
-        config.customPluginsDependencies &&
-        Array.isArray(config.customPluginsDependencies)
+        customPlugins.dependencies &&
+        Array.isArray(customPlugins.dependencies)
       ) {
         dependencies = npm.sync(
-          config.customPluginsDependencies,
+          customPlugins.dependencies,
           {
             output: true,
             cwd: pluginsPath,
@@ -37,7 +39,7 @@ const hooks = {
       global[id] = { hooks, config, dependencies, console };
 
       const script = new vm.Script(
-        `(${config.customPlugins.toString()})(global['${id}'])`
+        `(${customPlugins.callback.toString()})(global['${id}'])`
       );
       script.runInThisContext();
 
