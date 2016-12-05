@@ -28,7 +28,7 @@ const hooks = {
         dependencies = npm.sync(
           customPlugins.dependencies,
           {
-            output: true,
+            output: customPlugins.output,
             cwd: pluginsPath,
             env: shellEnv.sync(),
           }
